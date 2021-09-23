@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        const obj = {
+            a: '112',
+            b: {
+                name: 'xm',
+                fn: function() {
+                    console.log(this);
+                }
+            }
+        }
+
+        console.log(typeof obj.b.fn);
+
+        // instanceof 用来检测构造函数的prototype是否出现在对象的原型链上
+        function deepCopy(obj, hash = new WeakMap()) {
+            if(obj === null) return null
+            if(obj instanceof Date) return new Date(obj)
+            if(obj instanceof RegExp) return new RegExp(obj)
+            // 可能是普通的值, 也可能是函数
+            if(typeof obj !== 'object') return obj
+            if(hash.get(obj)) return hash.get(obj)
+            let cloneObj = new obj.constructor()
+            hash.set(obj, cloneObj)
+            for( let key in obj ){
+                if(obj.hasOwnProperty(key)){
+                    cloneObj[key] = deepCopy(obj[key])
+                }
+            }
+            return cloneObj
+        }
+
+        
+        /* 
+            浅拷贝的方式
+            1. Object.assgin()
+            2. slice
+            3. concant
+            4. 使用扩展运算符( [...array] )
+
+            深拷贝的方式
+            1. JSON.stringify()
+            2. _.cloneDeep
+            3. JQuery.extend()
+            4. 手写循环递归
+        */
+       
+
+    </script>
+</body>
+</html>
